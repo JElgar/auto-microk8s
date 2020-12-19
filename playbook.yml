@@ -27,3 +27,6 @@
       src: ~/.kube/config
       dest: ~/.kube/config
       flat: yes
+
+  - name: enable microk8s 
+    shell: microk8s.enable traefik
