@@ -19,7 +19,7 @@ provider "hcloud" {
 # Create a server
 resource "hcloud_server" "web" {
   name = "node1"
-  image = "debian-9"
+  image = "ubuntu-20.04"
   server_type = "cx11"
   ssh_keys = ["jelgar@UbuntuPC"]
     
@@ -32,11 +32,11 @@ resource "hcloud_server" "web" {
 
 
   provisioner "remote-exec" {
-    inline = ["sudo apt-get -qq install python -y"]
+    inline = ["sudo apt update -yqq; sudo apt upgrade -yqq; sudo apt-get install python -yqq"]
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook --inventory '${hcloud_server.web.ipv4_address}' playbook.yml"
+    command = "ansible-playbook --inventory '${hcloud_server.web.ipv4_address}, ' playbook.yml"
   }
 }
 
