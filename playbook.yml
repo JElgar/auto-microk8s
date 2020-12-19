@@ -1,12 +1,29 @@
-- hosts: all
+- name: Install required software
+  hosts: all 
   become: yes
   become_user: root
-  become_method: sudo
+  
   tasks:
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: latest
-    - name: Restart Nginx
-      service: name=nginx state=restarted
-      become: yes
+  - name: install snap
+    apt: 
+      name: 
+        - snapd
+ 
+  - name: install microk8s 
+    snap: 
+      name: microk8s
+      classic: yes
+  
+  - name: create .kube directory
+    file:
+      path: ~/.kube
+      state: directory
+  
+  - name: export microk8s kubectl config
+    shell: microk8s config > ~/.kube/config 
+  
+  - name: Copy kubeconfig locally 
+    fetch:
+      src: ~/.kube/config
+      dest: ~/.kube/config
+      flat: yes
