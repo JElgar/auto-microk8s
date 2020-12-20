@@ -29,4 +29,4 @@
       flat: yes
 
   - name: enable microk8s 
-    shell: microk8s.enable traefik
+    shell: microk8s.enable dashboard 
