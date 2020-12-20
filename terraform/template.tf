@@ -16,11 +16,24 @@ provider "hcloud" {
   token = var.hcloud_token
 }
 
+# Create network
+resource "hcloud_network" "microk8s-network" {
+  name = "microk8s-network"
+  ip_range = "10.0.1.0/24"
+}
+
+# Create floating ip
+resource "hcloud_floating_ip" "floating-ip" {
+  type = "ipv4"
+  home_location = "nbg1"
+}
+
 # Create a server
 resource "hcloud_server" "web" {
   name = "node1"
   image = "ubuntu-20.04"
   server_type = "cx11"
+  location = "nbg1"
   ssh_keys = ["jelgar@UbuntuPC"]
     
   connection {
