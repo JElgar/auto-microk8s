@@ -36,7 +36,7 @@ resource "hcloud_server" "web" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook --inventory '${hcloud_server.web.ipv4_address}, ' playbook.yml"
+    command = "ansible-playbook --inventory '${hcloud_server.web.ipv4_address}, ' ansible/install-microk8s-playbook.yml"
   }
 }
 
